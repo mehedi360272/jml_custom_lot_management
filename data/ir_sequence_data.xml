@@ -1,0 +1,11 @@
+<odoo>
+  <data noupdate="1">
+    <record id="seq_lot_auto_generate" model="ir.sequence">
+      <field name="name">Auto Lot Number</field>
+      <field name="code">auto.lot.number</field>
+      <field name="prefix"/>
+      <field name="padding">7</field>
+      <field name="number_next">1</field>
+    </record>
+  </data>
+</odoo>

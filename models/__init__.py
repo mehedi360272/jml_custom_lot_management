@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+
+from . import jml_supplier_source
+from . import jml_inherit_stock_lot
+from . import jml_inherit_product_template
+from . import jml_auto_generate_lot_number
+from . import jml_inherit_stock_move
+from . import jml_inherit_mrp_production
+from . import mrp_warning_wizard
