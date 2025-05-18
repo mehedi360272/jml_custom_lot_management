@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='default_code']" position="after">
                 <field name="lot_prefix"/>
+                <field name="lock_product"/>
                 <field name="avg_uom_calculation"/>
             </xpath>
             <xpath expr="//field[@name='responsible_id']" position="after">

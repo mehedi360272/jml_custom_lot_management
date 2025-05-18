@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 class ProductProduct(models.Model):
     _inherit = 'product.template'
@@ -14,3 +14,5 @@ class ProductProduct(models.Model):
         required=True
     )
     avg_weight = fields.Float(string="Average Weight")
+
+    lock_product = fields.Boolean(string='Lock Product')
