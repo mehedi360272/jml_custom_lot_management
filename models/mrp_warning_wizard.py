@@ -50,6 +50,7 @@ class MrpProduction(models.Model):
         return super().button_mark_done()
 
     def custom_backorder_action(self):
+        # তোমার নিজের ব্যাকঅর্ডার লজিক
         self.write({'state': 'progress'})
         return True
 
