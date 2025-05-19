@@ -1,19 +1,38 @@
 <odoo>
-    <record id="view_mrp_warning_wizard_form" model="ir.ui.view">
-        <field name="name">mrp.warning.wizard.form</field>
-        <field name="model">mrp.warning.wizard</field>
+    <record id="view_mrp_warning_wizard_confirmed_form" model="ir.ui.view">
+        <field name="name">mrp.warning.wizard.confirmed.form</field>
+        <field name="model">mrp.warning.wizard.confirmed</field>
         <field name="arch" type="xml">
-            <form string="Warning">
+            <form string="Warning - Confirmed">
                 <sheet>
                     <group>
-                        <field name="warning_message" nolabel="1" readonly="1"/>
+                        <field name="warning_message" readonly="1"/>
                     </group>
                     <footer>
-                        <button string="Confirm  Produce" type="object" name="action_confirm" class="btn-primary"/>
-                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        <button name="action_confirm" string="Continue" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
                     </footer>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <record id="view_mrp_warning_wizard_progress_form" model="ir.ui.view">
+        <field name="name">mrp.warning.wizard.progress.form</field>
+        <field name="model">mrp.warning.wizard.progress</field>
+        <field name="arch" type="xml">
+            <form string="Warning - In Progress">
+                <sheet>
+                    <group>
+                        <field name="warning_message" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_confirm" string="Continue" type="object" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
 </odoo>

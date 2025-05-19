@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_jml_supplier_source,jml_supplier_source,model_jml_supplier_source,base.group_user,1,1,1,1
-access_mrp_warning_wizard,mrp_warning_wizard,model_mrp_warning_wizard,base.group_user,1,1,1,1
+access_mrp_warning_wizard_confirmed,mrp_warning_wizard_confirmed,model_mrp_warning_wizard_confirmed,base.group_user,1,1,1,1
+access_mrp_warning_wizard_progress,mrp_warning_wizard_progress,model_mrp_warning_wizard_progress,base.group_user,1,1,1,1
