@@ -15,8 +15,8 @@
         'views/jml_supplier_source_view.xml',
         'views/jml_inherit_stock_lot_view.xml',
         'views/jml_inherit_product_template_view.xml',
+        'views/jml_inherit_stock_move_line_view.xml',
         'views/jml_mrp_warning_wizard.xml',
-        # 'views/jml_stock_move_view.xml',
         'views/menu.xml',
         # data
         'data/ir_sequence_data.xml',

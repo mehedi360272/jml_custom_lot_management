@@ -1,0 +1,30 @@
+<odoo>
+    <record id="view_move_line_form_inherit_supplier_source" model="ir.ui.view">
+        <field name="name">stock.move.line.form.inherit.supplier.source</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="supplier_source_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_move_line_tree_inherit_supplier_source" model="ir.ui.view">
+        <field name="name">stock.move.line.tree.inherit.supplier.source</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="supplier_source_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+</odoo>
+
+
