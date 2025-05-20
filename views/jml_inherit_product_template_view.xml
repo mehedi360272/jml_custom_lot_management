@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='default_code']" position="after">
-                <field name="lot_prefix"/>
+                <field name="lot_prefix" invisible="tracking != 'lot'"/>
                 <field name="lock_product" invisible="tracking != 'lot'"/>
                 <field name="avg_uom_calculation"/>
             </xpath>

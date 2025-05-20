@@ -10,9 +10,7 @@ class ProductProduct(models.Model):
             ('1', 'U1 / U2'),
             ('2', 'U2 / U1'),
         ],
-        string="UOM Calculation",
-        required=True
-    )
+        string="UOM Calculation",)
     avg_weight = fields.Float(string="Average Weight")
 
     lock_product = fields.Boolean(string='Lock Product')
