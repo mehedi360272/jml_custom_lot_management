@@ -19,6 +19,7 @@
             </xpath>
         </field>
     </record>
+
     <record id="product_template_tree_inherit_lot_count" model="ir.ui.view">
         <field name="name">product.template.tree.inherit.lot.count</field>
         <field name="model">product.template</field>
@@ -29,4 +30,16 @@
             </xpath>
         </field>
     </record>
+
+    <record id="product_product_stock_quantity_tree_view_inherit_note" model="ir.ui.view">
+        <field name="name">product.product.stock.quantity.tree.inherit.note</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_available']" position="before">
+                <field name="lot_count_value"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

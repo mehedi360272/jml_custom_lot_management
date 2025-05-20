@@ -6,4 +6,5 @@ from . import jml_inherit_product_template
 from . import jml_auto_generate_lot_number
 from . import jml_inherit_stock_move_line
 from . import jml_inherit_mrp_production
+from . import jml_inherit_product_product
 from . import mrp_warning_wizard

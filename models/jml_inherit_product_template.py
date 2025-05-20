@@ -17,8 +17,8 @@ class ProductProduct(models.Model):
 
     lock_product = fields.Boolean(string='Lock Product')
 
-    lot_count = fields.Integer(
-        string='Lot Count',
+    lot_count = fields.Float(
+        string='Lot On Hand',
         compute='_compute_lot_count'
     )
 
