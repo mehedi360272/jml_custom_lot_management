@@ -6,6 +6,13 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='qty_available']" position="before">
                 <field name="lot_count_value"/>
+                <button name="action_view_lots"
+                        string="View"
+                        type="object"
+                        icon="fa-eye"
+                        class="btn-link"
+                        context="{}"
+                        invisible="lot_count_value == 0"/>
             </xpath>
         </field>
     </record>
