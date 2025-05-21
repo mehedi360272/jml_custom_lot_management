@@ -1,6 +1,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class SupplierSource(models.Model):
     _name = 'jml.supplier.source'
     _description = 'Supplier Source'

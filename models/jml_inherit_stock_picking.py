@@ -33,3 +33,16 @@ class StockPicking(models.Model):
                                         move_line.quantity
                                     ))
         return messages
+
+#
+# class StockBackorderConfirmation(models.TransientModel):
+#     _inherit = 'stock.backorder.confirmation'
+#
+#     def process(self):
+#         for pick in self.pick_ids:
+#             if pick.picking_type_id.code == 'internal':
+#                 warning_messages = pick._check_locked_lots()
+#                 if warning_messages:
+#                     raise ValidationError("\n".join(warning_messages))
+#
+#         return super().process()

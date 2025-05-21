@@ -5,6 +5,9 @@ from odoo.exceptions import ValidationError
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
+    supplier_source_id = fields.Many2one('jml.supplier.source', string='Source Location')
+    note = fields.Text(string='Note')
+
 
     @api.onchange('product_id', 'quantity', 'location_id', 'lot_id')
     def _onchange_quantity_vs_onhand(self):
