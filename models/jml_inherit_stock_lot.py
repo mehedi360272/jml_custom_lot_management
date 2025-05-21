@@ -18,3 +18,21 @@ class StockLot(models.Model):
             template = product.product_tmpl_id
             vals['is_lock'] = template.lock_product
         return super(StockLot, self).create(vals)
+
+
+
+class StockQuant(models.Model):
+    _inherit = 'stock.quant'
+
+    supplier_source_data = fields.Many2one(
+        'jml.supplier.source',
+        string="Supplier Source",
+        compute="_compute_supplier_source_data",
+        store=True
+    )
+
+    @api.depends('lot_id')
+    def _compute_supplier_source_data(self):
+        for record in self:
+            record.supplier_source_data = record.lot_id.supplier_source_id.name if record.lot_id and record.lot_id.supplier_source_id else ''
+

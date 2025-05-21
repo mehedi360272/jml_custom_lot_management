@@ -8,7 +8,7 @@
 
                 <field name="supplier_source_id"/>
                 <field name="create_date"/>
-<!--                <field name="lock_unlock"/>-->
+                <!--                <field name="lock_unlock"/>-->
                 <field name="is_lock"/>
 
             </xpath>
@@ -23,6 +23,16 @@
             <xpath expr="//list/field[@name='product_id']" position="after">
                 <field name="note"/>
                 <field name="supplier_source_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_stock_quant_tree_simple_inherit" model="ir.ui.view">
+        <field name="name">view.stock.quant.tree.simple.inherit</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_simple"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='lot_id']" position="after">
+                <field name="supplier_source_data"/>
             </xpath>
         </field>
     </record>
