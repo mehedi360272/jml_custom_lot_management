@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class ProductProduct(models.Model):
     _inherit = 'product.template'
 
-    lot_prefix = fields.Char(string="Lot Prefix")
+    lot_prefix = fields.Char(string="Lot Prefix", store="True")
 
     avg_uom_calculation = fields.Selection(
         selection=[

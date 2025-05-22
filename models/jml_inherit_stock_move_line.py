@@ -5,9 +5,56 @@ from odoo.exceptions import ValidationError
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
+    # These fields will be auto-filled from the related Lot via the Quant
     supplier_source_id = fields.Many2one('jml.supplier.source', string='Source Location')
-    note = fields.Text(string='Note')
+    note = fields.Html(string='Note')
 
+    @api.onchange('quant_id')
+    def _onchange_quant_id_get_supplier_and_note(self):
+        """
+        When the quant_id is changed on a stock move line,
+        automatically pull the supplier_source_id and note from the associated Lot (via quant.lot_id)
+        """
+        for line in self:
+            lot = line.quant_id.lot_id if line.quant_id else False
+            if lot:
+                # Set supplier source from the lot, if available
+                if lot.supplier_source_id:
+                    line.supplier_source_id = lot.supplier_source_id
+                # Set note from the lot, if available
+                if lot.note:
+                    line.note = lot.note
+
+    @api.model
+    def create(self, vals):
+        """
+        When a stock.move.line record is created, pull supplier_source_id and note
+        from the related lot through quant_id
+        """
+        res = super().create(vals)
+        for line in res:
+            lot = line.quant_id.lot_id if line.quant_id else False
+            if lot:
+                if lot.supplier_source_id:
+                    line.supplier_source_id = lot.supplier_source_id
+                if lot.note:
+                    line.note = lot.note
+        return res
+
+    def write(self, vals):
+        """
+        When a stock.move.line is updated, also update the supplier_source_id and note
+        from the associated lot if quant_id is involved
+        """
+        res = super().write(vals)
+        for line in self:
+            lot = line.quant_id.lot_id if line.quant_id else False
+            if lot:
+                if lot.supplier_source_id:
+                    line.supplier_source_id = lot.supplier_source_id
+                if lot.note:
+                    line.note = lot.note
+        return res
 
     @api.onchange('product_id', 'quantity', 'location_id', 'lot_id')
     def _onchange_quantity_vs_onhand(self):

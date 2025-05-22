@@ -20,7 +20,6 @@ class StockLot(models.Model):
         return super(StockLot, self).create(vals)
 
 
-
 class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
@@ -31,8 +30,22 @@ class StockQuant(models.Model):
         store=True
     )
 
+    note = fields.Char(
+        string="Note",
+        compute="_compute_supplier_source_data",
+        store=True
+    )
+
     @api.depends('lot_id')
     def _compute_supplier_source_data(self):
         for record in self:
-            record.supplier_source_data = record.lot_id.supplier_source_id.name if record.lot_id and record.lot_id.supplier_source_id else ''
-
+            record.supplier_source_data = (
+                record.lot_id.supplier_source_id
+                if record.lot_id and record.lot_id.supplier_source_id
+                else False
+            )
+            record.note = (
+                record.lot_id.note
+                if record.lot_id and record.lot_id.note
+                else ''
+            )
