@@ -1,16 +1,17 @@
 from odoo import models, fields, api
 
+
 class ProductProduct(models.Model):
     _inherit = 'product.template'
 
-    lot_prefix = fields.Char(string="Lot Prefix", store="True")
+    lot_prefix = fields.Char(string="Lot Prefix", store=True)
 
     avg_uom_calculation = fields.Selection(
         selection=[
             ('1', 'U1 / U2'),
             ('2', 'U2 / U1'),
         ],
-        string="UOM Calculation",)
+        string="UOM Calculation", )
     avg_weight = fields.Float(string="Average Weight")
 
     lock_product = fields.Boolean(string='Lock Product')

@@ -5,12 +5,8 @@
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group/group//field[@name='product_id']" position="after">
-
                 <field name="supplier_source_id"/>
                 <field name="create_date"/>
-                <!--                <field name="lock_unlock"/>-->
-                <field name="is_lock"/>
-
             </xpath>
         </field>
     </record>

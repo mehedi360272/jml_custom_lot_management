@@ -56,34 +56,59 @@ class StockMoveLine(models.Model):
                     line.note = lot.note
         return res
 
-    @api.onchange('product_id', 'quantity', 'location_id', 'lot_id')
-    def _onchange_quantity_vs_onhand(self):
-        for move in self:
-            if not move.product_id or not move.quantity or not move.location_id or not move.lot_id:
-                continue
+    @api.onchange('quant_id')
+    def _onchange_quant_id_get_supplier_and_note(self):
+        for line in self:
+            lot = line.quant_id.lot_id if line.quant_id else False
+            if lot:
+                if lot.supplier_source_id:
+                    line.supplier_source_id = lot.supplier_source_id
+                if lot.note:
+                    line.note = lot.note
 
-            # Check if the lot is locked
-            if move.lot_id.is_lock:
-                # Fetch on-hand quantity specific to the lot
-                quant = self.env['stock.quant'].search([
-                    ('product_id', '=', move.product_id.id),
-                    ('location_id', '=', move.location_id.id),
-                    ('lot_id', '=', move.lot_id.id)
-                ], limit=1)
+            # Auto-set quantity from quant's available_quantity if product is locked
+            if line.quant_id and line.quant_id.product_id.lock_product:
+                line.quantity = line.quant_id.available_quantity
 
-                lot_onhand_qty = quant.quantity if quant else 0.0
+    # @api.onchange('product_id', 'quantity', 'location_id', 'lot_id')
+    # def _onchange_quantity_vs_onhand(self):
+    #     for move in self:
+    #         if not move.product_id or not move.quantity or not move.location_id or not move.lot_id:
+    #             continue
+    #
+    #         # Product lock check from product.template
+    #         if move.product_id.product_tmpl_id.lock_product:
+    #             quant = self.env['stock.quant'].search([
+    #                 ('product_id', '=', move.product_id.id),
+    #                 ('location_id', '=', move.location_id.id),
+    #                 ('lot_id', '=', move.lot_id.id)
+    #             ], limit=1)
+    #
+    #             lot_onhand_qty = quant.quantity if quant else 0.0
+    #
+    #             if move.quantity > lot_onhand_qty:
+    #                 return {
+    #                     'warning': {
+    #                         'title': 'Warning! Maximum Quantity Reached!',
+    #                         'message': f"Product '{move.product_id.display_name}' is locked. Demanded quantity ({move.quantity}) exceeds on-hand quantity ({lot_onhand_qty:.2f}) for lot '{move.lot_id.name}'.",
+    #                     }
+    #                 }
+    #             elif move.quantity < lot_onhand_qty:
+    #                 return {
+    #                     'warning': {
+    #                         'title': 'Warning! Quantity Less Than On-Hand!',
+    #                         'message': f"Product '{move.product_id.display_name}' is locked. Demanded quantity ({move.quantity}) is less than on-hand quantity ({lot_onhand_qty:.2f}) for lot '{move.lot_id.name}'.",
+    #                     }
+    #                 }
 
-                if move.quantity > lot_onhand_qty:
-                    return {
-                        'warning': {
-                            'title': 'Warning! Maximum Quantity Reached!',
-                            'message': f"Demanded quantity ({move.quantity}) is greater than on-hand quantity ({lot_onhand_qty:.2f}) for lot '{move.lot_id.name}' of product '{move.product_id.display_name}'.",
-                        }
-                    }
-                elif move.quantity < lot_onhand_qty:
-                    return {
-                        'warning': {
-                            'title': 'Warning! Quantity Less Than On-Hand!',
-                            'message': f"Demanded quantity ({move.quantity}) is less than on-hand quantity ({lot_onhand_qty:.2f}) for lot '{move.lot_id.name}' of product '{move.product_id.display_name}'.",
-                        }
-                    }
+    # ...............................................
+    is_internal_transfer = fields.Boolean(
+        string="Is Internal Transfer", compute="_compute_is_internal_transfer", store=True
+    )
+
+    @api.depends('picking_id.picking_type_id.code')
+    def _compute_is_internal_transfer(self):
+        for record in self:
+            code = record.picking_id.picking_type_id.code if record.picking_id and record.picking_id.picking_type_id else ''
+            record.is_internal_transfer = code == 'internal'
+
